@@ -228,8 +228,8 @@ def get_name(call: CallbackQuery, data: dict):
 
     msg = bot.edit_message_text(
         text=f'{_t}'
-             'Please reply vps name:eg- sg1\n\n'
-             '/back Sebelumnya',
+             'Please reply vps name:eg - sg1\n\n'
+             '/back Back',
         chat_id=call.from_user.id,
         message_id=call.message.message_id,
         parse_mode='HTML'
@@ -245,7 +245,7 @@ def ask_create(m: Message):
     _t = t + f'Country: <code>{user_dict[m.from_user.id]["region_slug"]}</code>\n' \
              f'Model: <code>{user_dict[m.from_user.id]["size_slug"]}</code>\n' \
              f'Sys Os: <code>{user_dict[m.from_user.id]["image_slug"]}</code>\n' \
-             f'Nama: <code>{m.text}</code>\n\n'
+             f'Name: <code>{m.text}</code>\n\n'
     markup = InlineKeyboardMarkup(row_width=2)
     markup.add(
         InlineKeyboardButton(
