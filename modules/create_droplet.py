@@ -46,7 +46,7 @@ def select_account(d: Union[Message, CallbackQuery]):
 
     bot.send_message(
         text=f'{t}'
-             'Select Account',
+             'Choose Acc',
         chat_id=d.from_user.id,
         parse_mode='HTML',
         reply_markup=markup
@@ -65,7 +65,7 @@ def select_region(call: CallbackQuery, data: dict):
 
     bot.edit_message_text(
         text=f'{_t}'
-             f'Get in that country...',
+             f'Get In The Country...',
         chat_id=call.from_user.id,
         message_id=call.message.message_id,
         parse_mode='HTML'
@@ -103,11 +103,11 @@ def select_size(call: CallbackQuery, data: dict):
     })
 
     _t = t + f'Acc: <code>{user_dict[call.from_user.id]["account"]["email"]}</code>\n' \
-             f'Country: <code>{region_slug}</code>\n\n'
+             f'Region: <code>{region_slug}</code>\n\n'
 
     bot.edit_message_text(
         text=f'{_t}'
-             f'Get the model...',
+             f'Get Model...',
         chat_id=call.from_user.id,
         message_id=call.message.message_id,
         parse_mode='HTML'
@@ -128,14 +128,14 @@ def select_size(call: CallbackQuery, data: dict):
     markup.add(*buttons)
     markup.row(
         InlineKeyboardButton(
-            text='Previous',
+            text='Back',
             callback_data=f'create_droplet?nf=select_region&doc_id={user_dict[call.from_user.id]["account"].doc_id}'
         )
     )
 
     bot.edit_message_text(
         text=f'{_t}'
-             f'Select the model',
+             f'Select Model',
         chat_id=call.from_user.id,
         message_id=call.message.message_id,
         reply_markup=markup,
@@ -151,7 +151,7 @@ def select_image(d: Union[Message, CallbackQuery], data: dict):
     })
 
     _t = t + f'Acc: <code>{user_dict[d.from_user.id]["account"]["email"]}</code>\n' \
-             f'Country: <code>{user_dict[d.from_user.id]["region_slug"]}</code>\n' \
+             f'Region: <code>{user_dict[d.from_user.id]["region_slug"]}</code>\n' \
              f'Model: <code>{size_slug}</code>\n\n'
 
     def get_image_markup():
@@ -173,7 +173,7 @@ def select_image(d: Union[Message, CallbackQuery], data: dict):
         markup.add(*buttons)
         markup.row(
             InlineKeyboardButton(
-                text='Previous',
+                text='Back',
                 callback_data=f'create_droplet?nf=select_size&region={user_dict[d.from_user.id]["region_slug"]}'
             )
         )
@@ -222,14 +222,14 @@ def get_name(call: CallbackQuery, data: dict):
     })
 
     _t = t + f'Acc: <code>{user_dict[call.from_user.id]["account"]["email"]}</code>\n' \
-             f'Country: <code>{user_dict[call.from_user.id]["region_slug"]}</code>\n' \
+             f'Region: <code>{user_dict[call.from_user.id]["region_slug"]}</code>\n' \
              f'Model: <code>{user_dict[call.from_user.id]["size_slug"]}</code>\n' \
              f'Sys Os: <code>{image_slug}</code>\n\n'
 
     msg = bot.edit_message_text(
         text=f'{_t}'
-             'Please reply VPS name:SG1 \n\n'
-             '/back Previous',
+             'Please reply vps name:eg- sg1\n\n'
+             '/back Sebelumnya',
         chat_id=call.from_user.id,
         message_id=call.message.message_id,
         parse_mode='HTML'
@@ -245,11 +245,11 @@ def ask_create(m: Message):
     _t = t + f'Country: <code>{user_dict[m.from_user.id]["region_slug"]}</code>\n' \
              f'Model: <code>{user_dict[m.from_user.id]["size_slug"]}</code>\n' \
              f'Sys Os: <code>{user_dict[m.from_user.id]["image_slug"]}</code>\n' \
-             f'Name: <code>{m.text}</code>\n\n'
+             f'Nama: <code>{m.text}</code>\n\n'
     markup = InlineKeyboardMarkup(row_width=2)
     markup.add(
         InlineKeyboardButton(
-            text='Previous',
+            text='Back',
             callback_data=f'create_droplet?nf=get_name&image={user_dict[m.from_user.id]["image_slug"]}'
         ),
         InlineKeyboardButton(
@@ -288,7 +288,7 @@ def confirm_create(call: CallbackQuery, data: dict):
 
     bot.edit_message_text(
         text=f'{call.message.html_text}\n\n'
-             '<b>Creating VPS...</b>',
+             '<b>Wait For Create VPS...</b>',
         chat_id=call.from_user.id,
         message_id=call.message.message_id,
         parse_mode='HTML'
@@ -306,7 +306,7 @@ def confirm_create(call: CallbackQuery, data: dict):
 
     droplet_actions = droplet.get_actions()
     for action in droplet_actions:
-        while action.status != 'Completed':
+        while action.status != 'completed':
             sleep(5)
             action.load()
     droplet.load()
@@ -314,7 +314,7 @@ def confirm_create(call: CallbackQuery, data: dict):
     markup = InlineKeyboardMarkup()
     markup.row(
         InlineKeyboardButton(
-            text='Check the details',
+            text='Check the Details',
             callback_data=f'droplet_detail?'
                           f'doc_id={user_dict[call.from_user.id]["account"].doc_id}&'
                           f'droplet_id={droplet.id}'
@@ -326,7 +326,7 @@ def confirm_create(call: CallbackQuery, data: dict):
              f'Username  : <code>root</code>\n'   
              f'Password: <code>{password}</code>\n'
              f'IP VPS    ：<code>{droplet.ip_address}</code>\n\n'
-             '<b>Create Successfully </b>',
+             '<b>Server Create Successfully</b>',
         chat_id=call.from_user.id,
         message_id=call.message.message_id,
         parse_mode='HTML'
