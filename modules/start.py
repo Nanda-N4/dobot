@@ -31,7 +31,7 @@ def start(d: Message):
             callback_data='manage_droplets'
         ),
     )
-    t = f'Welcome <b>{bot_name}</b>\n\n' \
+    t = f'Welcome<b>My Friends</b>\n\n' \
         'You Can Manage DigitalOcean Account, create VPS, Etc..\n\n' \
         'Quick Commends:\n' \
         '/start - start bot\n' \
@@ -40,6 +40,7 @@ def start(d: Message):
         '/bath_do - batch test accounts\n' \
         '/add_vps - add droplets\n' \
         '/sett_vps - list droplets\n' \
+        'This Bot Modified By N4TEAM\n \n Ask any Questions? Come Here - @n4nd404\n' \
         ' \n'
     bot.send_message(
         text=t,
